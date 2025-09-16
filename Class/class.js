@@ -48,5 +48,35 @@ class Model extends Car2 {
   }
 }
 
+
 const myCar2 = new Model("Ford", "Mustang");
 console.log(myCar2.show());
+
+
+class Calculator {
+  // Static method for addition
+  static add(a, b) {
+    return a + b;
+  }
+  // Static method for multiplication
+  static multiply(a, b) {
+    return a * b;
+  }
+}
+
+// Call static methods using the class name
+console.log("Sum:", Calculator.add(5, 3));      // 8
+console.log("Product:", Calculator.multiply(4, 6)); // 24
+
+// Demonstrate that static methods cannot be called from an instance
+const calc = new Calculator();
+try {
+  console.log(calc.add(5, 3)); // Should throw error
+} catch (e) {
+  console.log("Error:", e.message);
+}
+try {
+  console.log(calc.multiply(4, 6)); // Should throw error
+} catch (e) {
+  console.log("Error:", e.message);
+}
