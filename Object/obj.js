@@ -133,14 +133,47 @@ const fruit1 = {
   Bananas:300, 
   Oranges:200, 
   Apples:500
-}; 
+};
 
+fruit1.FunctionName = function() {
+  return this;
+};
+console.log(fruit1.FunctionName());
 let t = "";
 for (let [fruit, amount] of Object.entries(fruit1)) {
-  t += fruit + ": " + amount + "\n";
+  if (typeof amount !== 'function') {
+    t += fruit + ": " + amount + "\n";
+  }
 }
 console.log(t);
 
 let txt = JSON.stringify(fruit1);
 console.log(txt); // {"Bananas":300,"Oranges":200,"Apples":500}
 
+const person9 = {
+  firstName  : "John",
+  lastName   : "Doe",
+  id     : 5566,
+  myFunction : function() {
+    return this;
+  }
+};
+
+console.log(person9.myFunction());
+
+const user = {
+  id: 1,
+  profile: {
+    username: "shampa",
+    email: "s@example.com"
+  }
+};
+
+let { profile: { username, email }, country = " Bangladesh", id } = user;
+console.log(username, email, country, id); 
+
+const numbers = [10, 20, 30, 40, 50, 60, 70];
+
+// Destructuring
+const [a, b, ...rest] = numbers;
+console.log(a + "\n" + b + "\n" + rest );
