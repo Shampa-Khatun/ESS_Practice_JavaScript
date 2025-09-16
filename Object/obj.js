@@ -69,6 +69,27 @@ const Shampa = new Person4("Shampa", "Khatun", 24, "black");
 
 console.log("My father is " + myFather.firstName + " my mother is " + myMother.firstName + " and I am " + Shampa.firstName);
 console.log("my sirnamne is " + Shampa.sirname());
+
+// Will Not Work
+Person4.nationality = "English"; // cz amra ekhane object er bahire add korte parbo na
+// Add a Name Method
+myMother.changeName = function (name) {
+  this.lastName = name;
+}
+
+// Change Name
+myMother.changeName("Doe");
+console.log("my mother is " + myMother.firstName + " " + myMother.lastName);
+
+//prototype is like a shared toolbox for all objects created yby new person4()
+Person4.prototype.changeName = function (name) {
+  this.lastName = name;
+}
+
+myFather.changeName("Smith");
+console.log("my father is " + myFather.firstName + " " + myFather.lastName);
+
+
 const person5 = {
   firstName: "Shampa",
   lastName: "Raisa",
@@ -122,3 +143,4 @@ console.log(t);
 
 let txt = JSON.stringify(fruit1);
 console.log(txt); // {"Bananas":300,"Oranges":200,"Apples":500}
+
