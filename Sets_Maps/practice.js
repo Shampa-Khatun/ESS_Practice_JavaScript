@@ -98,23 +98,6 @@ console.log("Using forEach:");
 carBrands.forEach((brand) => console.log(brand));
 
 
-// 9. clear()
-carBrands.clear();
-console.log("After clear:", carBrands); 
-
-const admin = new Set(["read", "write", "delete", "manage"]);
-const editor = new Set(["read", "write"]);
-const viewer = new Set(["read"]);
-const guest = new Set(["comment"]);
-
-console.log("Admin ∪ Editor:", admin.union(editor));
-console.log("Admin ∩ Editor:", admin.intersection(editor));
-console.log("Admin - Editor:", admin.difference(editor));
-console.log("Editor Δ Viewer:", editor.symmetricDifference(viewer));
-console.log("Is Viewer ⊆ Editor?", viewer.isSubsetOf(editor));
-console.log("Is Admin ⊇ Viewer?", admin.isSupersetOf(viewer));
-console.log("Is Guest disjoint with Admin?", guest.isDisjointFrom(admin));
-console.log("Is Viewer disjoint with Editor?", viewer.isDisjointFrom(editor));
 // Adding methods to Set prototype for set operations
 Set.prototype.union = function(setB) {
   return new Set([...this, ...setB]);
@@ -222,9 +205,93 @@ for (const a of system.getAdmins()) {
   console.log(a.fullName, "Permissions:", a.permissions);
 }
 
-console.log("Regular users:");
+
 for (const u of system.getUsers()) {
-  console.log(u.fullName);
+  console.log("Name:", u.fullName);
 }
 
-console.log("Find user by email (bob@example.com):", system.findUserByEmail("bob@example.com").fullName);
+// Demonstrate setEmail
+user1.setEmail("alice.new@example.com");
+console.log("Updated email for Alice:", user1.email);
+
+// Demonstrate addPermission/removePermission
+admin1.addPermission("delete");
+console.log("Admin permissions after add:", admin1.permissions);
+admin1.removePermission("write");
+console.log("Admin permissions after remove:", admin1.permissions);
+
+// Find user by email
+const found = system.findUserByEmail("bob@example.com");
+if (found) {
+  console.log("Found:", found.fullName, "| Role:", found.getRole());
+} else {
+  console.log("User not found.");
+}
+
+const wm = new WeakMap();
+
+let user = { name: "Shampa" };
+
+wm.set(user, "Admin role");
+
+console.log(wm.get(user)); // "Admin role"
+
+wm.delete(user); // remove entry
+console.log(wm.get(user)); // undefined
+
+let tempUser = { name: "Temp User" };
+const permissions = new WeakMap();
+
+permissions.set(tempUser, ["read", "write"]);
+
+console.log(permissions.get(tempUser)); // ["read", "write"]
+
+tempUser = null; // the object can now be garbage collected
+// WeakMap automatically removes the entry
+
+const userSessions = new WeakMap();
+
+function login(user) {
+  const session = { token: "xyz123", expires: Date.now() + 3600000 };
+  userSessions.set(user, session);
+}
+
+function getSession(user) {
+  return userSessions.get(user);
+}
+
+let bob = { name: "Bob" };
+login(bob);
+
+console.log(getSession(bob)); // { token: 'xyz123', expires: ... }
+
+bob = null; // session object is automatically removable from memory
+console.log(getSession(bob)); // undefined
+
+let text = "";
+
+// Create a WeakMap to store visit counts
+const visitsCount = new WeakMap();
+
+// Create Visitor Objects
+const John = { name: "John", age: 40 };
+const Paul = { name: "Paul", age: 41 };
+const Ringo = { name: "Ringo", age: 42 };
+const George = { name: "George", age: 43 };
+
+// Track visits
+track(Paul);
+track(Ringo);
+track(Paul);
+track(Paul);
+track(John);
+
+// Function to track visitors
+function track(visitor) {
+  let count = visitsCount.get(visitor) || 0;
+  count++;
+  visitsCount.set(visitor, count);
+  text += `${visitor.name}, age ${visitor.age}, has visited ${count} time(s).\n`;
+}
+console.log(text);
+
