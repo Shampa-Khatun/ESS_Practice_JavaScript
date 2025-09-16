@@ -303,3 +303,47 @@ obj.increment;
 obj.decrement;
 
 console.log(obj.counter); 
+
+
+//The Object.preventExtensions() method prevents adding properties to an object.
+
+const leafs = {
+  type: "maple",
+  color: "red"
+}
+Object.preventExtensions(leafs);
+leafs.height = "15cm"; // will not be added 
+leafs.color = "green"; // will be changed  cz oi command ekta prevent kore
+Object.preventExtensions(leafs);
+fruits.push("yellow");
+console.log(leafs.height); // undefined
+console.log(leafs.color); // green
+console.log(Object.isExtensible(leafs)); // false
+
+//The Object.seal() method seals an object, preventing new properties from being added to it and marking all existing properties as non-configurable. Values of present properties can still be changed as long as they are writable.
+
+const car = {
+  type: "Fiat",
+  model: "500",
+  color: "white"
+};
+Object.seal(car);
+car.color = "red"; // will be changed cz eta amra to add korchina just change korchi
+console.log(car.color); // red
+car.owner = "Shampa"; //  will NOT work, new property cannot be added
+delete car.model;      //  will NOT work, existing property cannot be deleted
+console.log(car);
+console.log(Object.isSealed(car)); // true
+
+//The Object.freeze() method freezes an object. A frozen object can no longer be changed; freezing an object prevents new properties from being added to it, existing properties from being removed, prevents changing the enumerability, configurability, or writability of existing properties, and prevents the values of existing properties from being changed. In essence the object is made effectively immutable. The freeze method returns the same object that was passed in. 
+const book = {
+  title: "Learn JavaScript",
+  page: 500
+};
+Object.freeze(book);
+book.page = 600; // will NOT work
+book.author = "Shampa"; // will NOT work
+delete book.title; // will NOT work
+console.log(book.page);
+console.log(book);
+console.log(Object.isFrozen(book)); // true
