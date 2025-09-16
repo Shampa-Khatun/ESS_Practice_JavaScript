@@ -1,0 +1,76 @@
+// Users with scores in multiple subjects
+const users = [
+  { name: "Alice", scores: { math: 90, english: 85, science: 95 } },
+  { name: "Bob", scores: { math: 70, english: 80, science: 75 } },
+  { name: "Charlie", scores: { math: 85, english: 90, science: 80 } }
+];
+
+// 1. For loop to print names
+for (let i = 0; i < users.length; i++) {
+  console.log("User:", users[i].name);
+}
+
+// 2. While loop to print total score per user
+let i = 0;
+while (i < users.length) {
+  const total = Object.values(users[i].scores).reduce((a,b) => a+b, 0);
+  console.log(users[i].name, "total score:", total);
+  i++;
+}
+
+// 3. Do...while loop to print average score
+i = 0;
+do {
+  const scores = Object.values(users[i].scores);
+  const avg = scores.reduce((a,b) => a+b, 0) / scores.length;
+  console.log(users[i].name, "average score:", avg);
+  i++;
+} while (i < users.length);
+
+// 4. forEach to print individual subject scores
+users.forEach(user => {
+  for (let subject in user.scores) {
+    console.log(user.name, subject, ":", user.scores[subject]);
+  }
+});
+
+// 5. for...of with Set
+const subjects = new Set(["math", "english", "science"]);
+for (let subject of subjects) console.log("Subject:", subject);
+
+// 6. Map to store highest scorer per subject
+const highScores = new Map();
+for (let subject of subjects) {
+  let maxScore = 0;
+  let topUser = "";
+  for (let user of users) {
+    if (user.scores[subject] > maxScore) {
+      maxScore = user.scores[subject];
+      topUser = user.name;
+    }
+  }
+  highScores.set(subject, { topUser, maxScore });
+}
+for (let [subject, data] of highScores) {
+  console.log(subject, "top scorer:", data.topUser, "score:", data.maxScore);
+}
+
+// 7. Nested loop example: print scores matrix
+console.log("Scores Matrix:");
+for (let user of users) {
+  const scoreArray = Object.values(user.scores);
+  for (let score of scoreArray) {
+    process.stdout.write(score + " "); // prints on same line
+  }
+  console.log();
+}
+
+// 8. Break and continue example
+console.log("Scores above 80:");
+for (let user of users) {
+  for (let score of Object.values(user.scores)) {
+    if (score < 80) continue; // skip low scores
+    if (score > 95) break; // exit if unrealistically high
+    console.log(user.name, score);
+  }
+}
