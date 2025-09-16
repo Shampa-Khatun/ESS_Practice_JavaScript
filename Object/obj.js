@@ -107,3 +107,18 @@ console.log(myArray); // [ 'John', 30, 'New York' ]
 // Stringify the Array
 let msg = myArray.toString();
 console.log(msg); // John,30,New York
+
+const fruit1 = {
+  Bananas:300, 
+  Oranges:200, 
+  Apples:500
+}; 
+
+let t = "";
+for (let [fruit, amount] of Object.entries(fruit1)) {
+  t += fruit + ": " + amount + "\n";
+}
+console.log(t);
+
+let txt = JSON.stringify(fruit1);
+console.log(txt); // {"Bananas":300,"Oranges":200,"Apples":500}
