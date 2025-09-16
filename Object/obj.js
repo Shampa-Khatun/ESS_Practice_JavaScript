@@ -214,3 +214,92 @@ for (let [x,y] of result.low.entries()) {
   txt2 += y.name + " " + y.quantity + "\n";
 }
 console.log(txt2);
+
+const person11 = {
+  firstName: "John",
+  lastName: "Doe",
+  language: "EN"
+};
+
+// Add a Property
+Object.defineProperty(person11, "year", {value:"2008"})
+console.log(person11.year); // 2008 
+// Change a Property
+Object.defineProperty(person11, "language", {value:"BN"})
+console.log(person11.language);
+// Delete a Property
+delete person11.year;
+console.log(person11.year); // undefined
+// Get all the properties of the object
+let prop = Object.getOwnPropertyNames(person11);
+console.log(prop); // [ 'firstName', 'lastName', 'language' ]
+
+Object.defineProperty(person11, "language", {writable:false});
+person11.language = "FR";
+console.log(person11.language); // ekhane write kora jaini.. ager BN e output show korche
+
+Object.defineProperty(person11, "language", {enumerable:false});
+for (let x in person11) 
+  {
+    console.log(x)
+  } // language property show korbe na
+
+  Object.keys(person11); // Get all Enumerable Properties
+
+  //GETTERS AND SETTERS 
+  // Getter: A function that gets or returns the value of a property.
+  // Setter: A function that sets or updates the value of a property.
+
+const person12 = {
+  firstName: "Shampa",
+  lastName: "Khatun"
+};
+
+// Add a "fullName" property with getter and setter
+Object.defineProperty(person12, "fullName", {
+  get: function() {
+    return this.firstName + " " + this.lastName;
+  },
+  set: function(name) {
+    const parts = name.split(" ");
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  }
+});
+
+// Using the getter
+console.log(person12.fullName); // Shampa Khatun
+
+// Using the setter
+person12.fullName = "Shahariar Amin";
+console.log(person12.firstName); 
+console.log(person12.lastName);  
+console.log(person12.fullName); 
+
+const obj = {counter:0};
+
+// Define Setters and Getters
+Object.defineProperty(obj, "reset", {
+  get : function () {this.counter = 0;}
+});
+Object.defineProperty(obj, "increment", {
+  get : function () {this.counter++;}
+});
+Object.defineProperty(obj, "decrement", {
+  get : function () {this.counter--;}
+});
+Object.defineProperty(obj, "add", {
+  set : function (value) {this.counter += value;}
+});
+Object.defineProperty(obj, "subtract", {
+  set : function (value) {this.counter -= value;}
+});
+
+// Play with counter:
+obj.reset;
+obj.add = 5;
+obj.subtract = 1;
+obj.increment;
+obj.decrement;
+
+console.log(obj.counter); 
