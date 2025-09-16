@@ -122,6 +122,7 @@ const person8 = {
 };
 
 // Create an Array from the Properties
+//Object.values() is similar to Object.entries(), but returns a single dimension array of the object values:
 const myArray = Object.values(person8);
 console.log(myArray); // [ 'John', 30, 'New York' ]
 
@@ -139,6 +140,9 @@ fruit1.FunctionName = function() {
   return this;
 };
 console.log(fruit1.FunctionName());
+
+// Object.entries() method returns an array of the key/value pairs in an object
+// We can use for...of loop to access the key/value pairs.
 let t = "";
 for (let [fruit, amount] of Object.entries(fruit1)) {
   if (typeof amount !== 'function') {
@@ -177,3 +181,36 @@ const numbers = [10, 20, 30, 40, 50, 60, 70];
 // Destructuring
 const [a, b, ...rest] = numbers;
 console.log(a + "\n" + b + "\n" + rest );
+
+const fruits2 = [
+  {name:"apples", quantity:300},
+  {name:"bananas", quantity:500},
+  {name:"oranges", quantity:200},
+  {name:"kiwi", quantity:150}
+];
+
+// Callback function to select low volumes 
+function myCallback({ quantity }) {
+  return quantity > 200 ? "ok" : "low";
+}
+
+//here avobe callback function is similar to this function
+/*function myCallback(fruit) {
+  return fruit.quantity > 200 ? "ok" : "low";
+}
+*/
+
+// Group by ok and low
+const result = Object.groupBy(fruits2, myCallback);
+
+// Display Results
+let txt2 ="\nThese fruits are Ok: \n";
+for (let [x,y] of result.ok.entries()) {
+  txt2 += y.name + " " + y.quantity + "\n";
+}
+
+txt2 += "\nThese fruits are low: \n";
+for (let [x,y] of result.low.entries()) {
+  txt2 += y.name + " " + y.quantity + "\n";
+}
+console.log(txt2);
