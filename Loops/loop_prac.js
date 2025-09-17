@@ -74,3 +74,10 @@ for (let user of users) {
     console.log(user.name, score);
   }
 }
+var ii, x = '';
+for (ii = 0; ii <= 5; ii++) {
+  x += ii;
+  console.log(ii); 
+}
+//console.log(ii); // 6
+console.log("Concatenated string:", x); // Concatenated string: 012345
