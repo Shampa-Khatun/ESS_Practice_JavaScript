@@ -195,3 +195,86 @@ console.log("Total:", result);
 
 // forEach method -> print all values
 //erator.from([1, 2, 3, 4, 5]).forEach(x => console.log("Value:", x));
+
+function* genExample() {
+  console.log("Step 1");
+  yield 10;
+
+  console.log("Step 2");
+  yield 20;
+
+  console.log("Step 3");
+  yield 30;
+}
+const g = genExample();
+
+console.log(g.next()); // Step 1, { value: 10, done: false }
+console.log(g.next()); // Step 2, { value: 20, done: false }
+console.log(g.next()); // Step 3, { value: 30, done: false }
+console.log(g.next()); // { value: undefined, done: true }
+
+function* fetchPages(totalPages) {
+  for (let i = 1; i <= totalPages; i++) {
+    yield `Fetching page ${i}...`; // pretend API call
+  }
+}
+
+const pages = fetchPages(3);
+
+console.log(pages.next().value); // Fetching page 1...
+console.log(pages.next().value); // Fetching page 2...
+console.log(pages.next().value); // Fetching page 3...
+console.log(pages.next());       // { value: undefined, done: true }
+
+function* idGenerator() {
+  let id = 1;
+  while (true) {
+    yield id++;
+  }
+}
+
+const gen = idGenerator();
+
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+console.log(gen.next().value); // 3
+
+function* fibonacci(n) {
+  let a = 0, b = 1;
+  for (let i = 0; i < n; i++) {
+    yield a;
+    [a, b] = [b, a + b]; // swap values
+  }
+}
+const fib = fibonacci(5);
+console.log(fib.next().value); // 0
+console.log(fib.next().value);  
+console.log(fib.next().value); // 1
+console.log(fib.next().value); // 1
+console.log(fib.next().value);
+
+function* naturalNumbers() {
+  let n = 1;
+  while (true) {
+    yield n++;
+  }
+}
+
+const nums = naturalNumbers();
+console.log(nums.next().value); // 1
+console.log(nums.next().value); // 2
+console.log(nums.next().value); // 3
+
+function* trafficLight() {
+  while (true) {
+    yield "🟢 Green";
+    yield "🟡 Yellow";
+    yield "🔴 Red";
+  }
+}
+
+const light = trafficLight();
+console.log(light.next().value); // 🟢 Green
+console.log(light.next().value); // 🟡 Yellow
+console.log(light.next().value); // 🔴 Red
+console.log(light.next().value); // 🟢 Green (again cycle)
