@@ -136,3 +136,62 @@ for (const x of firstname) {
   j++;
 }
 console.log("Length of string:", j); // Length of string: 3
+
+//filter method
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];  
+const evenNumbers = numbers.filter(num => num % 2 === 0);
+console.log("Even numbers:", evenNumbers); // Even numbers: [ 2, 4, 6, 8, 10 ]
+//iterate over even numbers
+let evenText = "";  
+for (const num of evenNumbers) {
+  evenText += num + "\n"; // Concatenate each even number
+} 
+console.log("Even numbers:\n" + evenText); // prints each even number
+//map method
+const squaredNumbers = numbers.map(num => num * num);
+console.log("Squared numbers:", squaredNumbers); // Squared numbers: [ 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 ]
+//flatmap method
+// Create an iterator
+const myIterator6 = Iterator.from([1, 2, 3, 4, 5, 6]);
+
+// Map the Iterator
+const mappedIterator = myIterator6.flatMap(x => [x, x * 10]);
+
+// Iterate over the elements
+let t = "";
+for (const x of mappedIterator) {
+  t += x + "\n";
+}
+console.log("Mapped Iterator:\n" + t); // prints each mapped value
+
+// Create an iterator from array
+const myIterator = Iterator.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+// take method -> first 5 elements
+const firstFive = myIterator.take(5);
+let firstFiveText = "";
+for (const x of firstFive) {
+  firstFiveText += x + "\n";
+}
+console.log("First five elements:\n" + firstFiveText);
+
+// drop method -> skip first 5 elements
+const afterFive = Iterator.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).drop(5);
+let afterFiveText = "";
+for (const x of afterFive) {
+  afterFiveText += x + "\n";
+}
+console.log("After dropping first five:\n" + afterFiveText);
+
+// find method -> first even number
+const firstEven = Iterator.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  .find(x => x % 2 === 0);
+console.log("First even number:", firstEven);
+
+// reduce method -> sum all numbers
+const result = Iterator.from([175, 50, 25])
+  .reduce((total, num) => total + num, 0);
+console.log("Total:", result);
+
+// forEach method -> print all values
+//erator.from([1, 2, 3, 4, 5]).forEach(x => console.log("Value:", x));
