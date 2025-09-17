@@ -81,3 +81,58 @@ for (ii = 0; ii <= 5; ii++) {
 }
 //console.log(ii); // 6
 console.log("Concatenated string:", x); // Concatenated string: 012345
+
+const fruits = new Map([
+  ["apples", 500],
+  ["bananas", 300],
+  ["oranges", 200]
+]);
+
+
+// Iterate over the map elements
+let fruitText = "";
+for (const x of fruits) {
+  fruitText += x + "\n"; // Concatenate each fruit and its quantity
+}
+console.log(fruitText); // prints each fruit and its quantity
+
+
+//JS iterables
+const iterable = {
+  *[Symbol.iterator]() {
+    yield 1; 
+    yield 2;
+    yield 3;
+  }
+};
+
+for (const value of iterable) {
+  console.log(value); // prints 1, 2, 3
+}
+
+// Create an Object
+myNumbers = {};
+
+// Make it Iterable
+myNumbers[Symbol.iterator] = function() {
+  let n = 0;
+  done = false;
+  return {
+    next() {
+      n += 10;
+      if (n == 100) {done = true}
+      return {value:n, done:done};
+    }
+  };
+}
+
+let y2 = ""
+for (const num of myNumbers) {
+  y2 += num +"\n"
+}
+console.log(y2); // prints 10, 20, ..., 90
+let firstname = 'Jim', j = 0;
+for (const x of firstname) {
+  j++;
+}
+console.log("Length of string:", j); // Length of string: 3
