@@ -354,7 +354,6 @@ authenticateUser("shampa", "12345")
     return Promise.resolve();
   });
 
-// ✅ Fixed: return the promise chain here
 return authenticateUser("shampa", "wrongpass")
   .then((user) => {
     return fetchCart(user.id);
