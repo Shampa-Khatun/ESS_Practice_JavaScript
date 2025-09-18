@@ -1,56 +1,47 @@
-function display(any){
-    console.log(any);
+function display(any) {
+  console.log(any);
 }
-function calculator(a, b){
-    let sum = a+b;
-    display("Sum: " + sum);
+function calculator(a, b) {
+  let sum = a + b;
+  display("Sum: " + sum);
 }
-calculator(5, 3); 
+calculator(5, 3);
 
-//with callback
-function display1(any){
-    console.log(any);
+// with callback
+function display1(any) {
+  console.log(any);
 }
-function calculator1(a, b, callback){
-    let sum = a+b;
-    callback("Sum: " + sum);
+function calculator1(a, b, callback) {
+  let sum = a + b;
+  callback("Sum: " + sum);
 }
-calculator1(5, 3, display1); 
+calculator1(5, 3, display1);
 
 const num = [4, 1, -20, -7, 5, 9, -6];
-const positive = removeneg(num, (x)=> x>0);
+const positive = removeneg(num, (x) => x > 0);
 console.log(positive); // [4, 1, 5, 9]
 
-function removeneg(num, callback){
-    let result = [];
-    for (const n of num){
-        if (callback(n)) {
-            result.push(n);
-        }
+function removeneg(num, callback) {
+  let result = [];
+  for (const n of num) {
+    if (callback(n)) {
+      result.push(n);
     }
-    return result;
+  }
+  return result;
 }
 
-//setimeout
-function display3(any){
-    console.log(any);
+// setTimeout
+function display3(any) {
+  console.log(any);
 }
-function calculator3(a, b, callback){
-    let sum = a+b;
-    setTimeout(() => {
-        callback("Sum: " + sum);
-    }, 2000);
-}   
+function calculator3(a, b, callback) {
+  let sum = a + b;
+  setTimeout(() => {
+    callback("Sum: " + sum);
+  }, 2000);
+}
 calculator3(5, 3, display3);
-
-
-// setInterval(myFunction, 1000);
-
-// function myFunction() {
-//   let d = new Date();
-// console.log("Current time: " + d.toLocaleTimeString());
-    
-// }
 
 // callback hell
 function getUser(id, callback) {
@@ -129,36 +120,8 @@ loginUser("shampa", "12345", function (user) {
   });
 });
 
-//event-driven callback
-function loginUser(username, password, callback) {
-  setTimeout(() => {
-    console.log("User logged in");
-    callback({ username });
-  }, 1000);
-}
-
-function getCartItems(user, callback) {
-  setTimeout(() => {
-    console.log(`Cart fetched for ${user.username}`);
-    callback(["Laptop", "Book", "Pen"]);
-  }, 1000);
-}
-
-function checkout(cartItems, callback) {
-  setTimeout(() => {
-    console.log("Checkout done for:", cartItems);
-    callback("Order successful");
-  }, 1000);
-}
-
-loginUser("shampa", "12345", function (user) {
-  getCartItems(user, function (cart) {
-    checkout(cart, function (msg) {
-      console.log(msg);
-    });
-  });
-});
-function authenticateUser(user, callback) {
+// another flow with callbacks
+function authenticateUserCB(user, callback) {
   setTimeout(() => {
     console.log("User authenticated:", user);
     callback(null, user);
@@ -173,7 +136,7 @@ function checkBalance(user, callback) {
   }, 500);
 }
 
-function processPayment(amount, callback) {
+function processPaymentCB(amount, callback) {
   setTimeout(() => {
     if (amount > 200) return callback("Insufficient funds");
     console.log("Payment processed:", amount);
@@ -181,19 +144,18 @@ function processPayment(amount, callback) {
   }, 500);
 }
 
-// Flow with callbacks
-authenticateUser("Shampa", (err, user) => {
+authenticateUserCB("Shampa", (err, user) => {
   if (err) return console.error(err);
   checkBalance(user, (err, balance) => {
     if (err) return console.error(err);
-    processPayment(150, (err, msg) => {
+    processPaymentCB(150, (err, msg) => {
       if (err) return console.error(err);
       console.log(msg);
     });
   });
 });
 
-//promises
+// promises
 function asyncTask(success = true) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -202,24 +164,20 @@ function asyncTask(success = true) {
       } else {
         reject("Task failed");
       }
-    }, 10000);
+    }, 1000);
   });
 }
 
-// Using the promise
 asyncTask(true)
-  .then(result => console.log(result))
-  .catch(error => console.error(error));
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
 
-
-  function myDisplayer(some) {
-    console.log(some);
+function myDisplayer(some) {
+  console.log(some);
 }
 
-let myPromise = new Promise(function(myResolve, myReject) {
+let myPromise = new Promise(function (myResolve, myReject) {
   let x = 0;
-
-// some code (try to change x to 5)
 
   if (x == 0) {
     myResolve("OK");
@@ -229,14 +187,178 @@ let myPromise = new Promise(function(myResolve, myReject) {
 });
 
 myPromise.then(
-  function(value) {myDisplayer(value);},
-  function(error) {myDisplayer(error);}
+  function (value) {
+    myDisplayer(value);
+  },
+  function (error) {
+    myDisplayer(error);
+  }
 );
 
-const myPromises = new Promise(function(myResolve, myReject) {
-  setTimeout(function(){ myResolve("I love You !!"); }, 20000);
+const myPromises = new Promise(function (myResolve, myReject) {
+  setTimeout(function () {
+    myResolve("I love You !!");
+  }, 2000);
 });
 
-myPromises.then(function(value) {
+myPromises.then(function (value) {
   console.log(value); // I love You !!
 });
+
+const hasmeeting = false;
+const meeting = new Promise((resolve, reject) => {
+  if (!hasmeeting) {
+    const meetingdetails = {
+      name: "Technical Meeting",
+      location: "Google Meet",
+      time: "10:00 PM",
+    };
+    resolve(meetingdetails);
+  } else {
+    reject(new Error("Meeting already scheduled"));
+  }
+});
+
+const addtocalender = (meetingdetails) => {
+  const calender = `${meetingdetails.name} has been scheduled on ${meetingdetails.location} at ${meetingdetails.time}`;
+  return Promise.resolve(calender);
+};
+
+meeting
+  .then(addtocalender)
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+const promise1 = new Promise((resolve) => {
+  setTimeout(() => {
+    resolve("Promise 1 resolved after 5 seconds");
+  }, 5000);
+});
+const promise2 = new Promise((resolve) => {
+  setTimeout(() => {
+    resolve("Promise 2 resolved after 2 seconds");
+  }, 2000);
+});
+
+Promise.all([promise1, promise2]).then((res) => console.log(res));
+
+Promise.race([promise1, promise2]).then((res) => console.log(res));
+
+// complex example
+function authenticateUser(username, password) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (username === "shampa" && password === "12345") {
+        resolve({ id: 1, username });
+      } else {
+        reject(new Error("Authentication failed"));
+      }
+    }, 500);
+  });
+}
+
+function fetchCart(userId) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { product: "Laptop", qty: 1 },
+        { product: "Book", qty: 2 },
+      ]);
+    }, 500);
+  });
+}
+
+function checkInventory(cart) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const inventory = { Laptop: 5, Book: 2 };
+      for (const item of cart) {
+        if (!inventory[item.product] || inventory[item.product] < item.qty) {
+          return reject(new Error(`Out of stock: ${item.product}`));
+        }
+      }
+      resolve(cart);
+    }, 500);
+  });
+}
+
+function processPayment(user, amount) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (amount > 1000) {
+        reject(new Error("Payment declined: Over limit"));
+      } else {
+        resolve("Payment successful");
+      }
+    }, 700);
+  });
+}
+
+function sendEmail(user, message) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(`Email sent to ${user.username}: ${message}`);
+    }, 300);
+  });
+}
+
+function logOrder(order) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(`Order logged: ${JSON.stringify(order)}`);
+    }, 200);
+  });
+}
+
+// --- Promise chaining without async/await ---
+authenticateUser("shampa", "12345")
+  .then((user) => {
+    return fetchCart(user.id).then((cart) => ({ user, cart }));
+  })
+  .then(({ user, cart }) => {
+    return Promise.all([
+      checkInventory(cart),
+      logOrder({ user: user.username, cart }),
+    ]).then(() => ({ user, cart }));
+  })
+  .then(({ user, cart }) => {
+    const total = cart.reduce(
+      (sum, item) =>
+        sum + (item.product === "Laptop" ? 900 : 50) * item.qty,
+      0
+    );
+    return processPayment(user, total).then((paymentResult) => ({
+      user,
+      cart,
+      paymentResult,
+      total,
+    }));
+  })
+  .then(({ user, cart, paymentResult, total }) => {
+    return Promise.all([
+      sendEmail(user, `Your order is confirmed. Total: $${total}`),
+      Promise.resolve(paymentResult),
+    ]);
+  })
+  .then(([emailResult, paymentResult]) => {
+    console.log(paymentResult);
+    console.log(emailResult);
+    console.log("Order placed successfully!");
+  })
+  .catch((err) => {
+    console.error("Order error:", err && err.message ? err.message : err);
+    return Promise.resolve();
+  });
+
+// ✅ Fixed: return the promise chain here
+return authenticateUser("shampa", "wrongpass")
+  .then((user) => {
+    return fetchCart(user.id);
+  })
+  .catch((err) => {
+    console.error("Order error (auth):", err.message);
+  });
